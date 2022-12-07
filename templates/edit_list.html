@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit List
+{% endblock %}
+
+{% block main %}
+    List name:
+    <form action="/edit_list" method="post" class="row g-1 mb-5 center">
+        <div class="col">
+            <input autocomplete="off" autofocus class="form-control" name="listname" value="{{ list.listname }}" type="text" required>
+            <input type="hidden" name="list_id" value="{{ list.id }}">
+        </div>
+        <div class="col-2">
+            <button class="btn btn-outline-info w-100" type="submit">Save</button>
+        </div>
+    </form>
+
+    Share with:
+    <form action="/share" method="post" class="row g-1 mb-5 center">
+        <div class="col">
+            <input autocomplete="off" class="form-control" name="share" placeholder="Username" type="text" required>
+            <input type="hidden" name="list_id" value="{{ list.id }}">
+        </div>
+        <div class="col-2">
+            <button class="btn btn-outline-info w-100" type="submit">Share</button>
+        </div>
+    </form>
+
+    {% if shared %}
+    Shared with:
+    <table class="table w-100 mb-5 center">
+        <tr style="visibility: collapse;"><th></th></tr>
+    {% for user in shared %}
+        <tr class="row g-1">
+            <td class="col-10 list_item">{{ user.username }}</td>
+            <td class="col-2">
+                <form action="/share_delete" method="post">
+                    <input type="hidden" name="id" value="{{ user.id }}">
+                    <button class="button-a">
+                        <svg width=16 height=16 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <line x1="1" y1="1" x2="15" y2="15" stroke="red" stroke-width="3" />
+                            <line x1="15" y1="1" x2="1" y2="15" stroke="red" stroke-width="3" />
+                        </svg>
+                    </button>
+                </form>
+            </td>
+        </tr>
+
+
+    {% endfor %}
+    </table>
+    {% endif %}
+
+
+    <form action="/delete_list" method="post">
+        <input type="hidden" name="list_id" value="{{ list.id }}">
+        <button class="btn btn-outline-danger w-25" onclick="return confirm('Are you sure you want to delete?')" type="submit">Delete list</button>
+    </form>
+{% endblock %}

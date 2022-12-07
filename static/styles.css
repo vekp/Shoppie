@@ -1,0 +1,104 @@
+/* Size for brand */
+nav .navbar-brand
+{
+    font-size: xx-large;
+}
+
+body
+{
+    background-color: #212529;
+    color: white;
+}
+
+.list_item
+{
+    background-color: #212529;
+    color: white;
+    text-align: left;
+}
+
+.table
+{
+    border: none;
+    background-color: #212529;
+    color: white;
+}
+
+.form-control
+{
+    background-color:#212529;
+    color: #bbb;
+    border-color: #0dcaf0;
+}
+
+.form-control:focus
+{
+    background-color:#444;
+    color: white;
+    border-color: #0dcaf0;
+}
+
+td {
+    border-color: #085262;
+    border-style: solid;
+    border-width: 1;
+}
+
+th
+{
+    border-color: #0dcaf0;
+    border-style: solid;
+    border-width: 1;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+  }
+
+input[type="submit"]
+{
+    background-color: #212529;
+    border: none;
+}
+
+.alert
+{
+    border-radius: 0.5rem;
+    border-width: 1px;
+    background-color: #085262;
+    border-color: #0dcaf0;
+}
+
+.text-red
+{
+    color: #F9383a;
+}
+
+.text-orange
+{
+    color: #Ff9e00;
+}
+
+.text-yellow
+{
+    color: #Ffff00;
+}
+
+.navbar-a
+{
+    border-color: #0dcaf0 !important;
+}
+
+.button-a
+{
+    background-color: #212529;
+    border: none;
+    color: white;
+}
+
+.left
+{
+    text-align: left;
+}

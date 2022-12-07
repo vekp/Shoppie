@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit item
+{% endblock %}
+
+{% block main %}
+    <form action="/edit_item" method="post">
+        <div>
+            Item name: <input autocomplete="off" autofocus class="form-control form-a mx-auto w-75 mb-5 center" name="item_name" value="{{ item.name }}" type="text" required>
+            Quantity: <input autocomplete="off" class="form-control form-a mx-auto w-75 mb-5 center" name="item_qty" value="{{ item.quantity }}" type="number" min="1" required>
+            Date required: <input autocomplete="off" class="form-control form-a mx-auto w-75 mb-5 center" name="required" value="{{ item.required }}" type="date">
+        </div>
+        <input type="hidden" name="item_id" value="{{ item.id }}">
+        <button class="btn btn-outline-info w-25 mb-3" type="submit">Save</button>
+    </form>
+
+    <form action="/delete_item" method="post">
+        <input type="hidden" name="item_id" value="{{ item.id }}">
+        <button class="btn btn-outline-danger w-25" onclick="return confirm('Are you sure you want to delete?')" type="submit">Delete</button>
+    </form>
+{% endblock %}

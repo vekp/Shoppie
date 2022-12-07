@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Shopping lists
+{% endblock %}
+
+{% block main %}
+<h2 class="mb-4">Your Lists</h2>
+<form action="/add_list" method="post" class="row g-1 mb-4 center">
+    <div class="col">
+        <input autocomplete="off" class="form-control" name="listname" placeholder="New list" type="text" required>
+    </div>
+    <div class="col-2">
+        <button class="btn btn-outline-info w-100 ms-0" type="submit">Add</button>
+    </div>
+</form>
+
+<table class="table mb-4 center">
+    <tr>
+        <th class="col-10 list_item ps-3">List</th>
+        <th class="col-1">Items</th>
+        <th class="col-1">Edit</th>
+    </tr>
+    {% for list in lists %}
+    <tr>
+        <td>
+            <form method="get" action="/items">
+                <input type="hidden" name="list_id" value="{{ list.id }}">
+                <input class="w-100 list_item" type="submit" name="listname" value="{{ list.listname }}">
+            </form>
+        </td>
+        <td>{% if list.qty > 0%}{{ list.qty }}{% endif %}</td>
+        <td>
+            <form method="get" action="/edit_list">
+                <input type="hidden" name="list_id" value="{{ list.id }}">
+                <button class="button-a text-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                    </svg>
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% if shared %}
+<h2 class="mb-4">Shared lists</h2>
+<table class="table mb-4 center">
+    <tr>
+        <th class="col-10 list_item ps-3">List</th>
+        <th class="col-2">Items</th>
+    </tr>
+    {% for list in shared %}
+    <tr>
+        <td>
+            <form method="get" action="/items">
+                <input type="hidden" name="list_id" value="{{ list.id }}">
+                <input class="w-100 list_item" type="submit" name="listname" value="{{ list.listname }}">
+            </form>
+        </td>
+        <td>{% if list.qty > 0%}{{ list.qty }}{% endif %}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endif %}
+
+{% endblock %}

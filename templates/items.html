@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ listname }}
+{% endblock %}
+
+{% block main %}
+<form action="/edit_list" method="get" class="row center mb-4">
+    <p class="col-1"></p>
+    <h2 class="col-10">{{ listname }}</h2>
+    <button class="col-1 button-a text-info{% if not own %} d-none{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+        </svg>
+    </button>
+</form>
+<form action="/add_item" method="post" class="row g-1 mb-4 center">
+    <div class="col-10">
+        <input autocomplete="off" class="form-control" name="item_name" placeholder="New item" type="text" required>
+        <input type="hidden" name="list_id" value="{{ list_id }}">
+        <input type="hidden" name="listname" value="{{ listname }}">
+    </div>
+    <div class="col-2">
+        <button class="btn btn-outline-info w-100 ms-0" type="submit">Add</button>
+    </div>
+</form>
+
+<table class="table center">
+    <tr>
+        <th class="col-10 list_item ps-3">Item</th>
+        <th class="col">Qty</th>
+        <th class="col">Edit</th>
+    </tr>
+    {% for item in items %}
+    <tr>
+        <td>
+            <form method="post" action="/cross">
+                <input type="hidden" name="item_id" value="{{ item.id }}">
+                <input type="hidden" name="list_id" value="{{ item.list_id }}">
+                <input type="hidden" name="listname" value="{{ listname }}">
+                <input class="w-100 list_item
+                {% if item.crossed == 1 %} text-decoration-line-through{% endif %}
+                {% if item.priority <= 1 %} text-red{% endif %}
+                {% if 1 < item.priority <= 3 %} text-orange{% endif %}
+                {% if 3 < item.priority <= 5 %} text-yellow{% endif %}
+                " type="submit" name="name" value="{{ item.name }}">
+            </form>
+        </td>
+        <td>{{ item.quantity }}</td>
+        <td>
+            <form method="get" action="/edit_item">
+                <input type="hidden" name="item_id" value="{{ item.id }}">
+                <input type="hidden" name="list_id" value="{{ item.list_id }}">
+                <input type="hidden" name="listname" value="{{ listname }}">
+                <button class="button-a text-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                    </svg>
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+    {% if crossed %}
+    <tr style="visibility: collapse;">
+        <th></th><th></th><th></th>
+    </tr>
+    {% for item in crossed %}
+    <tr class="mt-3">
+        <td>
+            <form method="post" action="/cross">
+                <input type="hidden" name="item_id" value="{{ item.id }}">
+                <input type="hidden" name="list_id" value="{{ item.list_id }}">
+                <input type="hidden" name="listname" value="{{ listname }}">
+                <input class="w-100 list_item text-decoration-line-through" type="submit" name="name" value="{{ item.name }}">
+            </form>
+        </td>
+        <td>{{ item.quantity }}</td>
+        <td>
+            <form method="get" action="/edit_item">
+                <input type="hidden" name="item_id" value="{{ item.id }}">
+                <input type="hidden" name="list_id" value="{{ item.list_id }}">
+                <input type="hidden" name="listname" value="{{ listname }}">
+                <button class="button-a text-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                    </svg>
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+</table>
+{% endblock %}
