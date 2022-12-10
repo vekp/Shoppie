@@ -1,5 +1,5 @@
 # Shoppie
-### Video Demo:  <URL HERE>
+### Video Demo:  https://youtu.be/r4BTFmOsyPQ
 ### Description:
 Shoppie is grocery list web app. It allows users to create multiple lists, each with multiple items. When shopping, items can be crossed off as they are added to your shopping trolley. Lists can be shared among family members, and items can be colour coded to show their priority.
 
